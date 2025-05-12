@@ -6,3 +6,5 @@ ultralytics
 sentence-transformers
 chromadb
 fastapi-cli
+crawl4ai
+python-dotenv
