@@ -79,9 +79,33 @@ def is_indexed(photo_id: str) -> bool:
 
 def index_photo(photo: Dict[str, Any], food_class: str, is_food: bool):
     """Embed and index photo with metadata"""
+    # Check if this is the user's own photo or a friend's photo
+    is_own = photo.get("isOwnPhoto", True)
+    is_friend = photo.get("isFriendPhoto", False)
+    
+    # Get user ID to determine relationship context
+    user_id = str(photo.get("userId", ""))
+    
+    # Determine relationship description and context
+    relationship_context = ""
+    if is_own:
+        user_type = "bạn"
+    elif is_friend:
+        user_type = "bạn bè"
+        # Add explicit relationship context based on user ID
+        if user_id == "1":
+            relationship_context = " (Super Admin là bạn của Hoa Thanh)"
+        elif user_id == "3":
+            relationship_context = " (Hoa Thanh là bạn của Super Admin)"
+    else:
+        user_type = "người dùng khác"
+    
+    # Enhanced caption with more details about the food and relationship
     caption = (
-        f"{photo['userName']} đăng ảnh {food_class} vào ngày {photo['createdAt'][:10]}"
+        f"{photo['userName']} ({user_type}){relationship_context} đăng ảnh món {food_class} vào ngày {photo['createdAt'][:10]}. "
+        f"Món ăn này thuộc loại {'thức ăn' if is_food else 'đồ uống/khác'}."
     )
+    
     vector = embedding_model.encode([caption])[0]
 
     collection.add(
@@ -91,11 +115,12 @@ def index_photo(photo: Dict[str, Any], food_class: str, is_food: bool):
         metadatas=[
             {
                 "photo_id": photo["id"],
-                "user_id": str(photo["userId"]),
+                "user_id": user_id,
                 "food_class": food_class,
                 "user_name": photo["userName"],
                 "created_at": photo["createdAt"],
-                "is_own_photo": photo.get("isOwnPhoto", False),
+                "is_own_photo": is_own,
+                "is_friend_photo": is_friend,
                 "is_food": is_food,
                 "indexed_at": datetime.utcnow().isoformat(),
             }
@@ -143,18 +168,31 @@ async def process_and_index_photos(auth_token: Optional[str] = None, max_photos:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-    photos = data.get("photos", [])
-
-    results = await asyncio.gather(*(process_photo(p) for p in photos))
+    # Get user and friend photos from new API structure
+    user_photos = data.get("userPhotos", [])
+    friend_photos = data.get("friendPhotos", [])
+    
+    # Mark photos with ownership information
+    for photo in user_photos:
+        photo["isOwnPhoto"] = True
+    
+    for photo in friend_photos:
+        photo["isOwnPhoto"] = False
+        photo["isFriendPhoto"] = True
+    
+    # Combine all photos for processing
+    all_photos = user_photos + friend_photos
+    
+    # Process all photos
+    results = await asyncio.gather(*(process_photo(p) for p in all_photos))
 
     return {
         "status": "done",
-        "total_photos": len(photos),
+        "total_photos": len(all_photos),
+        "user_photos_count": len(user_photos),
+        "friend_photos_count": len(friend_photos),
         "indexed": len([r for r in results if r["status"] == "indexed"]),
         "skipped": len([r for r in results if r["status"] == "skipped"]),
         "errors": [r for r in results if r["status"] == "error"],
         "details": results
     }
-
-
-

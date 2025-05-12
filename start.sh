@@ -20,6 +20,12 @@ pip install -r requirements.txt
 echo "Installing FastAPI CLI tools..."
 pip install fastapi-cli
 
+echo "Setup crawl4ai..."
+crawl4ai-setup
+
+echo "Verify crawl4ai..."
+crawl4ai-doctor
+
 echo "Setup complete! Virtual environment is now active."
 
 # Đảm bảo source vào virtual environment trước khi hỏi người dùng
