@@ -17,6 +17,7 @@ class OllamaRequest(BaseModel):
 
 class GroqRequest(BaseModel):
     prompt: str
+    model: str
     temperature: Optional[float] = 0.7
     max_tokens: Optional[int] = 1024
 
@@ -178,4 +179,3 @@ async def list_prompt_options():
 async def suggest_with_prompt(user_id: str, prompt_key: str):
     result = await generate_suggestion_by_prompt(user_id, prompt_key)
     return {"suggestion": result}
-
