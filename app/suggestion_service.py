@@ -1,4 +1,6 @@
 from typing import List, Dict, Any
+
+from app.groq_client import ask_groq
 from .rag_indexer import collection
 from .config import logger
 from .ollama_client import ask_ollama
@@ -257,7 +259,7 @@ async def generate_suggestion_by_prompt(user_id: str, prompt_key: str) -> str:
         prompt = template.format(context=context)
         print(f"[DEBUG] Generating suggestion with prompt:\n{prompt}")
 
-        response = await ask_ollama(prompt)
+        response = await ask_groq(prompt)
         return response.strip()
     except Exception as e:
         logger.error(f"Suggestion generation error: {str(e)}")

@@ -8,3 +8,4 @@ chromadb
 fastapi-cli
 crawl4ai
 python-dotenv
+groq
