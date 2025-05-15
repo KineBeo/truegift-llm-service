@@ -1,0 +1,174 @@
+[
+    {
+        "name": "Phở Hà Nội",
+        "price": "40.000 - 90.000 VND",
+        "description": "Phở được ví như tinh hoa ẩm thực Hà Nội và đã rất nhiều lần được bình chọn trong top món ăn ngon nhất thế giới. Phở Hà Nội có vô vàn phong vị và cách chế biến khác nhau nên có thể chiều lòng được hầu hết các tín đồ ẩm thực như: Phở nước, phở xào, phở trộn, phở chiên phồng, phở bò, phở gà…",
+        "popular_address": "Phở Bát Đàn (Số 49 Bát Đàn, Hoàn Kiếm, Hà Nội), Phở Thìn bờ hồ (Số 61 Đinh Tiên Hoàng, Hoàn Kiếm, Hà Nội), Phở gánh Hàng chiếu (Ngã 4 Hàng Chiếu, Hàng Đường, Hoàn Kiếm, Hà Nội), Phở Sướng (Số 24 ngõ Trung Yên, 36B Mai Hắc Đế, Hai Bà Trưng, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Bún chả Hà Nội",
+        "price": "45.000 VND",
+        "description": "Bún chả Hà Nội đã từng được CNN bình chọn là món ngon nhất mùa hè. Nguyên liệu chính của món bún này là những miếng chả được tẩm ướp cầu kỳ, nướng trên than hoa thơm lừng ăn cùng nước mắm chua ngọt, bún và rau sống đơn giản nhưng đưa miệng khó tả.",
+        "popular_address": "Bún chả Tuyết 34 (34 Hàng Than, Ba Đình, Hà Nội), Bún chả Hương Liên (24 Lê Văn Hưu, Q. Hai Bà Trưng, TP. Hà Nội), Bún chả 41 (41 Cửa Đông, Hoàn Kiếm, Hà Nội), Bún chả Sinh Từ (316 Phố Vọng, Hai Bà Trưng, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Chả cá Lã Vọng",
+        "price": "120.000 VND",
+        "description": "Chả cá Lã Vọng là món ăn được đưa vào cuốn sách “1.000 nơi nên biết trước khi chết” và năm 2016 đã từng được CNN bình chọn là 1 trong các món Việt ngon nhất thế giới. Món ăn này ra đời từ năm 1871 và nguyên liệu chính là cá lăng tươi với ưu điểm ít xương, ngọt thịt và thơm ngon.",
+        "popular_address": "Chả cá Lã Vọng (14 Chả cá, Hoàn Kiếm, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Chả cá Lã Vọng",
+        "price": "Not specified",
+        "description": "Chả cá Lã Vọng chuẩn vị",
+        "popular_address": "Chả cá Lã Vọng cơ sở gốc (4 Chả Cá, Hàng Bồ, Hoàn Kiếm, Hà Nội), Chả cá Hà Thành (Số 67 Phó Đức Chính, Ba Đình, Hà Nội), Chả cá Thăng Long (19-21-31 Đường Thành, Hoàn Kiếm, Hà Nội), Chả cá Lã Vọng Hà Nội (Số 120K1 Giảng Võ, Ba Đình, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Bún cá rô đồng, bánh đa cá rô đồng",
+        "price": "50.000 VND",
+        "description": "Món bún cá rô đồng mang đậm hương vị của làng quê Bắc bộ xưa kia",
+        "popular_address": "Bánh đa cá rô đồng Anh Tú (số 10 Bùi Ngọc Dương, Hai Bà Trưng, Hà Nội), Bánh Đa Cá Rô Đồng Tiến Vua (Ngã tư La Dương, Lê Trọng Tấn, Hà Đông, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Bún cá, bánh đa cua Hải Phòng",
+        "price": "35.000 - 50.000 VND",
+        "description": "Món ăn sử dụng nguyên liệu chính là những đặc sản đất cảng như chả cá dẹt, bánh đa đỏ Dư Hàng Kênh cùng hải sản tươi ngon",
+        "popular_address": "Bánh đa cua Da Liễu (140 Trần Phú, Ngô Quyền, TP. Hải Phòng), Bánh đa cua đồng Lạch Tray (48 Lạch Tray, Ngô Quyền, TP. Hải Phòng), Bánh đa Cầu Đất (Số 195 Cầu Đất, P. Ngô Quyền, TP Hải Phòng)",
+        "error": false
+    },
+    {
+        "name": "Nem cua bể Hải Phòng",
+        "price": "100.000 VND",
+        "description": "Nem cua bể gói vuông với phần nhân phong phú và nguyên liệu đặc biệt nhất là thịt cua bể",
+        "popular_address": "Not specified",
+        "error": false
+    },
+    {
+        "name": "Nem cua bể",
+        "price": "Not specified",
+        "description": "Nem cua bể ngon nhức nhối",
+        "popular_address": "Nem cua bể Thuận Yến (Số 88 Trần Nhật Duật, Ngô Quyền, TP. Hải Phòng), Nhà hàng Phương Mai (Số 87 Cát Cụt, Lê Chân, TP. Hải Phòng), Nem cua bể gia truyền Bà Cụ (Số 179 Cầu Đất, Ngô Quyền, TP. Hải Phòng)",
+        "error": false
+    },
+    {
+        "name": "Chả mực Hạ Long",
+        "price": "70.000 VND (3 miếng), 160.000 VND/kg",
+        "description": "Mực nang tươi sống dày mình được tuyển chọn kỹ lưỡng rồi mang tẩm ướp gia vị vừa ăn, giã bằng tay rồi chiên vàng trong dầu mới",
+        "popular_address": "Chả mực Bá Kiến (Ki ốt số 46 – 47, chợ Hạ Long I, Tp Hạ Long), Chả mực Thoan (36 + 37 ngành hàng thực phẩm chín, chợ Hạ Long I, Tp Hạ Long), Chả mực Hoài Phương (46 – 47 ngành thực phẩm chín, chợ Hạ Long I, chợ Hạ Long I, Tp Hạ Long)",
+        "error": false
+    },
+    {
+        "name": "Bánh mì Hà Nội",
+        "price": "20.000 VND/ ổ",
+        "description": "Bánh mì Hà Nội có đặc điểm là có thể kết hợp nhiều loại nhân khác nhau từ thịt bò, thịt gà, heo quay, chả lụa, ruốc, trứng, pate, cá, xá xíu…",
+        "popular_address": "Bánh mì phố cổ (38 Đinh Liệt, Hoàn Kiếm, TP. Hà Nội), Bánh mì dân tổ (22 Trần Nhật Duật, Hoàn Kiếm, TP. Hà Nội), Bánh mì 25 (25 Hàng Cá, Hoàn Kiếm, TP. Hà Nội), Bánh mì Hai Mập (204 Hàng Bông, Hoàn Kiếm, TP. Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Khâu nhục Lạng Sơn",
+        "price": "160.000 - 220.000 VND/ bát",
+        "description": "Thịt ba chỉ được tẩm ướp cùng các nguyên liệu đặc trưng và hầm nhừ trong nhiều giờ",
+        "popular_address": "Nhà hàng Minh Quang (60 Ngô Quyền, TP. Lạng Sơn), Nhà hàng Tam Thanh (02 Trần Hưng Đạo, P. Chi Lăng, TP. Lạng Sơn), Nhà hàng Thảo Viên (57 Phai Vệ, phường Đông Kinh, TP. Lạng Sơn)",
+        "error": false
+    },
+    {
+        "name": "Trâu gác bếp Tây Bắc",
+        "price": "Not specified",
+        "description": "Thịt trâu tươi được tẩm ướp những gia vị núi rừng đặc trưng rồi mang hun chín bằng khói bếp",
+        "popular_address": "Not specified",
+        "error": false
+    },
+    {
+        "name": "Trâu gác bếp Tây Bắc",
+        "price": "850.000 - 900.000 VND/kg",
+        "description": "Thịt trâu gác bếp",
+        "popular_address": "TaybacFOODIE (Royal City, Thanh Xuân, Hà Nội), Hoa Ban Food (67A Trương Định, Hai Bà Trưng, Hà Nội)",
+        "error": false
+    },
+    {
+        "name": "Bún bò Huế",
+        "price": "35.000 VND/tô",
+        "description": "Tô bún bò quyện mùi mắm ruốc miền Trung, thơm lừng hương sả, giòn sựt móng giò, ngọt thanh chả cua, thịt bò mềm dai",
+        "popular_address": "Bún bò Mỹ Tâm (Số 5 Trần Cao Vân, Vĩnh Ninh, TP Huế), Quán bún bò Mệ Kéo (Số 20 Bạch Đằng, Phú Cát, TP Huế ), Bún bò ông Vọng - O Phụng (Số 5 Nguyễn Du, Phú Cát, TP Huế)",
+        "error": false
+    },
+    {
+        "name": "Mì Quảng",
+        "price": "40.000 - 60.000 VND/tô",
+        "description": "Tô mì với những sợi mì vàng ruộm, tôm tươi ngọt, heo quay giòn bì, gà xé miếng vừa ăn, đậu phộng bùi bùi, nước dùng beo béo, bánh đa giòn tan",
+        "popular_address": "Mì Quảng Bà Dậu (555 Trần Cao Vân, Trường Xuân, Tam Kỳ, Quảng Nam), Mì 92 (112A Trần Cao Vân, Cẩm Phổ, Hội An, Quảng Nam), Mì Quảng Ba Xùy (34 Phan Chu Trinh, Minh An, Hội An, Quảng Nam)",
+        "error": false
+    },
+    {
+        "name": "Lẩu thả Phan Thiết",
+        "price": "500.000 VND/suất",
+        "description": "Món lẩu hải sản sử dụng những nguyên liệu tươi ngon nhất đánh bắt từ vùng biển Mũi Né, đặc biệt là đặc sản cá mai",
+        "popular_address": "Lẩu thả Sóc Nâu (Số 5 Nguyễn Đình Chiểu, Hàm Tiến, Phan Thiết), Quán lẩu Seahorse Bistro (Số 11 Nguyễn Đình Chiểu, Hàm Tiến, Phan Thiết), Nhà hàng Mui Ne Deli (360 Nguyễn Thông, Phú Hài, Phan Thiết)",
+        "error": false
+    },
+    {
+        "name": "Cao lầu Hội An",
+        "price": "30.000 VND/bát",
+        "description": "Món cao lầu với những sợi mì tươi vàng ruộm, ăn cùng thịt heo, tôm, các loại rau sống và nước dùng đặc biệt",
+        "popular_address": "Cao lầu Không Gian Xanh (687 Hai Bà Trưng, TP. Hội An, Quảng Nam), Cao lầu Trung Bắc (Số 87 Trần Phú, TP. Hội An, Quảng Nam), Cao lầu Bà Thanh (Số 26 Thái Phiên, TP. Hội An, Quảng Nam), Cao lầu Liên (số 16",
+        "error": false
+    },
+    {
+        "index": 4,
+        "error": true,
+        "tags": [
+            "error"
+        ],
+        "content": "'list' object has no attribute 'usage'"
+    },
+    {
+        "index": 5,
+        "error": true,
+        "tags": [
+            "error"
+        ],
+        "content": "'str' object has no attribute 'choices'"
+    },
+    {
+        "index": 6,
+        "error": true,
+        "tags": [
+            "error"
+        ],
+        "content": "'list' object has no attribute 'usage'"
+    },
+    {
+        "name": "Cá lóc nướng trui",
+        "price": "170,000 - 300,000 VND",
+        "description": "Thịt cá chín được tưới mỡ hành, rắc đậu phộng, đánh thức mọi giác quan",
+        "popular_address": "Quán An (Số 15 – 19 – 21 Trần Văn Hoài, Ninh Kiều, Cần Thơ), Quán Đồng Xanh 2 (Số 211 Nguyễn Văn Linh, Ninh Kiều, Cần Thơ)",
+        "error": false
+    },
+    {
+        "name": "Lẩu cá linh bông điên điển",
+        "price": "280,000 VND",
+        "description": "Kết hợp cá linh và bông điên điển tạo thành món lẩu mang đậm hồn quê đất và người miền Tây",
+        "popular_address": "Quán Ăn Bảy Bồng (121 Trưng Nữ Vương, Châu Phú B, Châu Đốc, An Giang), Lẩu cá 658 (Số 216 Nguyễn Trường Tộ, Bình Khánh, Long Xuyên, An Giang)",
+        "error": false
+    },
+    {
+        "name": "Bún cá Châu Đốc",
+        "price": "50,000 VND",
+        "description": "Cá lóc đồng thịt chắc, dai, ngọt tự nhiên quyện cùng nước dùng dậy mùi mắm ruốc",
+        "popular_address": "Bún cá bà Lệ (Chợ châu Đốc, Bạch Đằng, Châu Phú An, Châu Đốc, An Giang), Bún cá Hiếu Thuận (Số 18/2A Lê Lợi, Mỹ Bình, Long Xuyên, An Giang), Bún cá Dì Hai (Chợ Mương Trâu, Bình Phú II, Bình Hoà, Châu Thành, An Giang)",
+        "error": false
+    },
+    {
+        "index": 8,
+        "error": true,
+        "tags": [
+            "error"
+        ],
+        "content": "'list' object has no attribute 'usage'"
+    }
+]

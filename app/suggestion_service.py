@@ -1,3 +1,8 @@
+import difflib
+import json
+import os
+import random
+import re
 from typing import List, Dict, Any
 
 from app.groq_client import ask_groq
@@ -24,7 +29,9 @@ Câu đầu tiên luôn là: Sau đây là những món ăn tôi chọn để g�
 Câu cuối cùng luôn là: Nếu bạn muốn thử món ăn nào, hãy nhắn cho tôi nhé!
 <user_query>
 Dựa trên các món ăn bạn bè bạn đã chia sẻ 🍽️🍜🍲: {context}
-Hãy chọn từ 1 đến 3 món ăn trong danh sách trên để gợi ý lại cho người dùng với tone chuyên nghiệp, ngắn gọn, súc tích
+Thông tin bổ sung về các món ăn: {crawled_info}
+Hãy chọn từ 1 đến 3 món ăn trong danh sách trên để gợi ý lại cho người dùng với tone chuyên nghiệp, ngắn gọn, súc tích. 
+Sử dụng thông tin bổ sung để làm rõ về món ăn (giá, địa chỉ, mô tả) nếu có.
 Không được nói về 1 món ăn quá 1 lần. Mỗi món ăn chỉ được nói 1 lần.
 Nếu danh sách chỉ có 1 món ăn, hãy chỉ gợi ý món ăn đó.
 </user_query>
@@ -32,16 +39,20 @@ Nếu danh sách chỉ có 1 món ăn, hãy chỉ gợi ý món ăn đó.
     "unique_today": """\
 Từ các món ăn gần đây của bạn và bạn bè:
 {context}
+Thông tin bổ sung về các món ăn: {crawled_info}
 
 Hãy gợi ý một món ăn từ các món ăn gần đây của bạn và bạn bè, mang vibe Gen Z.
-Thêm các thông tin cơ bản về món ăn đó, ví dụ như tên món, nơi bán, giá cả, địa chỉ, thời gian mở cửa, ...
+Sử dụng thông tin bổ sung để làm rõ về món ăn (giá, địa chỉ, mô tả) nếu có.
+Thêm các thông tin cơ bản về món ăn đó, ví dụ như tên món, nơi bán, giá cả, địa chỉ, thời gian mở cửa, ... với tone chuyên nghiệp, ngắn gọn, súc tích. 
 Hãy viết ngắn gọn dưới 60 từ.
 """,
     "special_day": """\
 Dựa trên các món ăn trước đây:
 {context}
+Thông tin bổ sung về các món ăn: {crawled_info}
 
 Nếu hôm nay là một ngày đặc biệt, bạn sẽ nên ăn gì? Hãy gợi ý món ăn phù hợp, cảm xúc Gen Z, thêm chút thơ mộng và icon nha!
+Sử dụng thông tin bổ sung để làm rõ về món ăn (giá, địa chỉ, mô tả) nếu có.
 """,
 }
 
@@ -143,22 +154,111 @@ def retrieve_friend_photos(user_id: str, top_k: int = 5) -> List[str]:
 
     return friend_photos
 
+CRAWLED_JSON_PATH = "extracted_food_data.json" 
 
-def retrieve_context(user_id: str, top_k: int = 5, prompt_key: str = None) -> List[str]:
-    """Smart context retrieval based on prompt type"""
-    # Convert string user_id to string for consistent comparison
+
+def normalize_food_name(name: str) -> str:
+    name = name.lower().strip()
+    name = re.sub(r"\s+", " ", name)
+    return name
+
+
+def get_closest_food_name(food_name: str, crawled_data: List[Dict]) -> str:
+    normalized_name = normalize_food_name(food_name)
+    food_names = [normalize_food_name(item["name"]) for item in crawled_data]
+    closest = difflib.get_close_matches(normalized_name, food_names, n=1, cutoff=0.8)
+    return closest[0] if closest else None
+
+
+def load_crawled_data() -> List[Dict[str, Any]]:
+    try:
+        if not os.path.exists(CRAWLED_JSON_PATH):
+            logger.error(f"File {CRAWLED_JSON_PATH} không tồn tại")
+            return []
+
+        with open(CRAWLED_JSON_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Lọc các mục không có error
+        valid_data = [item for item in data if not item.get("error", False)]
+        logger.debug(f"Đã đọc {len(valid_data)} món ăn hợp lệ từ file JSON")
+        return valid_data
+    except Exception as e:
+        logger.error(f"Lỗi khi đọc file JSON: {str(e)}")
+        return []
+
+
+# def get_crawled_info(food_names: List[str]) -> str:
+#     crawled_data = load_crawled_data()
+#     crawled_info = []
+#     for food_name in food_names:
+#         for item in crawled_data:
+#             if item.get("name", "").lower() == food_name.lower():
+#                 info = f"{item['name']}: {item['description']} Giá: {item['price']}. Địa chỉ: {item['popular_address']}"
+#                 crawled_info.append(info)
+#                 break
+#     return (
+#         "\n- ".join(crawled_info)
+#         if crawled_info
+#         else "Không có thông tin bổ sung cho các món ăn này."
+#     )
+
+
+def get_crawled_info(food_names: List[str]) -> str:
+    crawled_data = load_crawled_data()
+    crawled_info = []
+    normalized_food_names = [normalize_food_name(name) for name in food_names]
+    logger.debug(f"Tìm thông tin crawl cho các món: {food_names}")
+
+    for food_name, normalized_name in zip(food_names, normalized_food_names):
+        found = False
+        for item in crawled_data:
+            if normalize_food_name(item.get("name", "")) == normalized_name:
+                info = f"{item['name']}: {item['description']} Giá: {item['price']}. Địa chỉ: {item['popular_address']}"
+                crawled_info.append(info)
+                logger.debug(
+                    f"Tìm thấy thông tin khớp chính xác cho món {food_name}: {info}"
+                )
+                found = True
+                break
+
+        if not found:
+            closest_name = get_closest_food_name(food_name, crawled_data)
+            if closest_name:
+                for item in crawled_data:
+                    if normalize_food_name(item.get("name", "")) == closest_name:
+                        info = f"{item['name']} (gần giống {food_name}): {item['description']} Giá: {item['price']}. Địa chỉ: {item['popular_address']}"
+                        crawled_info.append(info)
+                        logger.debug(
+                            f"Tìm thấy thông tin khớp gần giống cho món {food_name}: {info}"
+                        )
+                        found = True
+                        break
+
+        if not found:
+            logger.debug(f"Không tìm thấy thông tin crawl cho món {food_name}")
+
+    return (
+        "\n- ".join(crawled_info)
+        if crawled_info
+        else "Không có thông tin bổ sung cho các món ăn này."
+    )
+
+
+def retrieve_context(
+    user_id: str, top_k: int = 5, prompt_key: str = None
+) -> tuple[List[str], str]:
+    """Smart context retrieval based on prompt type, returns context and crawled info"""
     if isinstance(user_id, int):
         user_id = str(user_id)
 
     if prompt_key == "like_friends":
         # For friend-based prompts, get only friend photos
-        return retrieve_friend_photos(user_id, top_k)
+        context = retrieve_friend_photos(user_id, top_k)
     elif prompt_key == "unique_today":
         # For mixed prompts, get both user and friend photos
         user_photos = retrieve_user_photos(user_id, top_k // 2)
         friend_photos = retrieve_friend_photos(user_id, top_k // 2)
-
-        # Filter out any error messages before combining
         actual_user_photos = [
             p
             for p in user_photos
@@ -169,21 +269,33 @@ def retrieve_context(user_id: str, top_k: int = 5, prompt_key: str = None) -> Li
             for p in friend_photos
             if not p.startswith("Hiện tại") and not p.startswith("Bạn chưa")
         ]
-
-        # If either is empty, just return the non-empty one
         if not actual_user_photos and not actual_friend_photos:
-            return [
+            context = [
                 "Bạn và bạn bè chưa có ảnh món ăn nào. Hãy chia sẻ những món ăn bạn thích!"
             ]
         elif not actual_user_photos:
-            return actual_friend_photos
+            context = actual_friend_photos
         elif not actual_friend_photos:
-            return actual_user_photos
-
-        return actual_user_photos + actual_friend_photos
+            context = actual_user_photos
+        else:
+            context = actual_user_photos + actual_friend_photos
     else:
-        # Default: get user's own photos
-        return retrieve_user_photos(user_id, top_k)
+        context = retrieve_user_photos(user_id, top_k)
+
+    # Extract food names from context
+    food_names = []
+    for snippet in context:
+        if snippet.startswith("Hiện tại") or snippet.startswith("Bạn chưa"):
+            continue
+        parts = snippet.split("đăng ảnh món ")
+        if len(parts) > 1:
+            food_name = parts[1].split(" vào ngày")[0].strip()
+            if food_name not in food_names:
+                food_names.append(food_name)
+
+    # Get crawled info for the extracted food names
+    crawled_info = get_crawled_info(food_names)
+    return context, crawled_info
 
 
 async def generate_suggestion_by_prompt(user_id: str, prompt_key: str) -> str:
@@ -197,7 +309,9 @@ async def generate_suggestion_by_prompt(user_id: str, prompt_key: str) -> str:
             return "Không hiểu bạn muốn hỏi gì 🤔"
 
         # Get context based on prompt type
-        context_snippets = retrieve_context(user_id, top_k=5, prompt_key=prompt_key)
+        context_snippets, crawled_info = retrieve_context(
+            user_id, top_k=5, prompt_key=prompt_key
+        )
 
         # Handle special case for friend-based prompts
         if prompt_key == "like_friends":
@@ -256,7 +370,7 @@ async def generate_suggestion_by_prompt(user_id: str, prompt_key: str) -> str:
             # Fallback to original context formatting if pattern matching fails
             context = "\n- " + "\n- ".join(context_snippets[:5])
 
-        prompt = template.format(context=context)
+        prompt = template.format(context=context, crawled_info=crawled_info)
         print(f"[DEBUG] Generating suggestion with prompt:\n{prompt}")
 
         response = await ask_groq(prompt)
