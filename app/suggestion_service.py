@@ -12,8 +12,8 @@ from .ollama_client import ask_ollama
 
 SUGGESTION_TEMPLATES = {
     "like_friends": """\
-Nhiệm vụ (Task):
-Trả lời truy vấn của người dùng dựa trên ngữ cảnh được cung cấp, có thể kèm theo các kiến thức bạn đã có về chủ đề đó
+🍽️ Gợi ý món ăn từ bạn bè của bạn!
+Hãy dựa trên các món ăn mà bạn bè đã chia sẻ để đưa ra gợi ý phù hợp nhất cho người dùng.
 Hướng dẫn:
     Nếu không biết câu trả lời, hãy nói rõ điều đó.
     Nếu không chắc chắn, hãy yêu cầu người dùng làm rõ thêm.
@@ -24,7 +24,7 @@ Hướng dẫn:
     Không sử dụng thẻ XML trong phần trả lời.
     Đảm bảo trích dẫn ngắn gọn và liên quan trực tiếp đến thông tin được cung cấp.
 Đầu ra (Output):
-Cung cấp câu trả lời rõ ràng, trực tiếp dựa trên ngữ cảnh. 
+Cung cấp câu trả lời rõ ràng, trực tiếp dựa trên ngữ cảnh, Việt hoá hết đoạn chat. Ví dụ không được để là bun dau mam tom, bun cha.... 
 Câu đầu tiên luôn là: Sau đây là những món ăn tôi chọn để gợi ý cho bạn:
 Câu cuối cùng luôn là: Nếu bạn muốn thử món ăn nào, hãy nhắn cho tôi nhé!
 <user_query>
@@ -37,23 +37,54 @@ Nếu danh sách chỉ có 1 món ăn, hãy chỉ gợi ý món ăn đó.
 </user_query>
 """,
     "unique_today": """\
-Từ các món ăn gần đây của bạn và bạn bè:
+🌟 Gợi ý món ngon hôm nay từ hành trình ẩm thực của bạn & bạn bè! 🍽️✨
 {context}
 Thông tin bổ sung về các món ăn: {crawled_info}
 
-Hãy gợi ý một món ăn từ các món ăn gần đây của bạn và bạn bè, mang vibe Gen Z.
+Hãy gợi ý một món ăn từ các món ăn gần đây của bạn và bạn bè.
 Sử dụng thông tin bổ sung để làm rõ về món ăn (giá, địa chỉ, mô tả) nếu có.
 Thêm các thông tin cơ bản về món ăn đó, ví dụ như tên món, nơi bán, giá cả, địa chỉ, thời gian mở cửa, ... với tone chuyên nghiệp, ngắn gọn, súc tích. 
 Hãy viết ngắn gọn dưới 60 từ.
+Đầu ra (Output):
+Cung cấp câu trả lời rõ ràng, trực tiếp dựa trên ngữ cảnh, Việt hoá hết đoạn chat. Ví dụ không được để là bun dau mam tom, bun cha.... 
 """,
     "special_day": """\
-Dựa trên các món ăn trước đây:
+Ngày đặc biệt cần bữa ăn đặc biệt, cùng chọn nha! 💖🍽️
 {context}
 Thông tin bổ sung về các món ăn: {crawled_info}
 
 Nếu hôm nay là một ngày đặc biệt, bạn sẽ nên ăn gì? Hãy gợi ý món ăn phù hợp, cảm xúc Gen Z, thêm chút thơ mộng và icon nha!
 Sử dụng thông tin bổ sung để làm rõ về món ăn (giá, địa chỉ, mô tả) nếu có.
+Lưu ý là Việt hoá hết đoạn chat. Ví dụ không được để là bun dau mam tom, bun cha.... 
 """,
+"mood_based": """\
+💭 Hôm nay bạn thấy sao? Mình sẽ chọn món phù hợp với tâm trạng của bạn nè!
+{context}
+Thông tin bổ sung về các món ăn: {crawled_info}
+
+Dựa trên các món ăn bạn và bạn bè từng chọn gần đây, hãy gợi ý một món ăn thật phù hợp với tâm trạng (vui, buồn, stress, chill, v.v.).  
+Hãy Việt hoá hoàn toàn nội dung, ví dụ không được để là bun dau mam tom, bun cha...  
+Gợi ý nên ngắn gọn dưới 60 từ, thêm chút cảm xúc Gen Z, icon dễ thương, và mô tả món ăn rõ ràng nếu có (giá, địa chỉ, mô tả...).
+""",
+"weather_fit": """\
+🌦️ Thời tiết thế này thì ăn gì cho đúng vibe? Mình gợi ý giúp bạn nè!
+{context}
+Thông tin bổ sung về các món ăn: {crawled_info}
+
+Dựa trên các món ăn gần đây và thông tin thời tiết hiện tại (mưa, nắng, se lạnh, oi bức,...), hãy chọn ra món ăn phù hợp nhất.  
+Gợi ý cần ngắn gọn, cảm xúc, dễ thương, Việt hoá hoàn toàn món ăn, và bổ sung thông tin như giá, nơi bán nếu có.  
+Không lặp lại món, chỉ chọn 1 món duy nhất cho phù hợp thời tiết nha!
+""",
+"late_night_craving": """\
+🌙 Đêm muộn bụng đói reo? Mình gợi ý món ngon đêm khuya cho bạn nè!
+{context}
+Thông tin bổ sung về các món ăn: {crawled_info}
+
+Chọn một món ăn phù hợp để ăn khuya, không quá nặng bụng nhưng vẫn ngon, dễ thương và phù hợp Gen Z.  
+Hãy dựa vào các món bạn từng ăn trước đó để đưa ra gợi ý. Thêm mô tả ngắn gọn (giá, địa chỉ, cảm giác khi ăn...) nếu có.  
+Việt hoá toàn bộ món ăn, thêm chút icon và cảm xúc nhẹ nhàng cho vibe đêm khuya nha.
+""",
+
 }
 
 
